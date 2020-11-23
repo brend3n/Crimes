@@ -43,7 +43,7 @@ crime_filterd.reset_index(drop=True, inplace=True)
 # print(crime_filterd.Location.values[0])
 # print(crime_filterd.Location)
 
-print(type(crime_filterd.Location.values[0]))
+# print(type(crime_filterd.Location.values[0]))
 
 
 crime_filterd = crime_filterd.dropna()
@@ -60,3 +60,20 @@ def slice_me_up_baby(y_or_something):
 # slice_me_up_baby("(1231028398123.2342234)")
 crime_filterd.Location = crime_filterd.Location.apply(lambda x: slice_me_up_baby(x))
 # print(crime_filterd.Location)
+
+crime_filterd['Longitude'] = crime_filterd.Location.apply(lambda x: x.split(', ')[0])
+crime_filterd['Latitude'] = crime_filterd.Location.apply(lambda x: x.split(', ')[1])
+
+# print(crime_filterd)
+
+print('\n\t\t\t\t\tLongitude: 28.xxxx \t Latitude -81.xxxx\n')
+crime_filterd['Longitude'] = crime_filterd.Longitude.apply(lambda x: x.split('.')[1])
+crime_filterd['Latitude'] = crime_filterd.Latitude.apply(lambda x: x.split('.')[1])
+print(crime_filterd)
+
+plt.figure(figsize=(15,5))
+plt.plot(crime_filterd.Longitude, crime_filterd.Latitude)
+plt.xlabel = "Longitude"
+plt.ylabel = "Latitude"
+plt.title = "Crime Clusters Clings Clanks and Cranks"
+plt.show()
